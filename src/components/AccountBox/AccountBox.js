@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { CLIENT_ID, CLIENT_SECRET } from '@env';
 import PropTypes from 'prop-types';
 import {
   authorizeThirdParty,
@@ -24,22 +23,8 @@ const AccountBox = ({ account, navigation }) => {
   const userToken = useSelector((state) => state.articles.userToken);
   const errorMessage = useSelector((state) => state.articles.errorMessage);
 
-  const config = {
-    redirectUrl: 'com.reactnativestarterkit://oauthredirect',
-    clientId: CLIENT_ID,
-    clientSecret: CLIENT_SECRET,
-    scopes: ['user', 'repo'],
-    additionalHeaders: { Accept: 'application/json' },
-    serviceConfiguration: {
-      authorizationEndpoint: 'https://github.com/login/oauth/authorize',
-      tokenEndpoint: 'https://github.com/login/oauth/access_token',
-      revocationEndpoint:
-        `https://github.com/settings/connections/applications/${CLIENT_ID}`,
-    },
-  };
-
   const onPress = () => {
-    dispatch(authorizeThirdParty(config));
+    dispatch(authorizeThirdParty(account.config));
   };
 
   useEffect(() => {
@@ -67,6 +52,7 @@ const AccountBox = ({ account, navigation }) => {
 AccountBox.propTypes = {
   account: PropTypes.shape({
     name: PropTypes.string,
+    config: PropTypes.shape({}),
   }),
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
@@ -76,6 +62,7 @@ AccountBox.propTypes = {
 AccountBox.defaultProps = {
   account: {
     name: '',
+    config: {},
   },
   navigation: {
     navigate: () => {},

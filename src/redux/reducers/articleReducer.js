@@ -1,3 +1,4 @@
+import { CLIENT_ID, CLIENT_SECRET } from '@env';
 import ARTICLE_TYPES from '../types/articleTypes';
 import constants from '../../constants/config';
 
@@ -6,12 +7,25 @@ const initialState = {
     {
       name: 'GitHub',
       type: constants.github,
-      url: 'http://github',
+      baseUrl: 'https://github.com',
+      config: {
+        redirectUrl: 'com.reactnativestarterkit://oauthredirect',
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        scopes: ['user', 'repo'],
+        additionalHeaders: { Accept: 'application/json' },
+        serviceConfiguration: {
+          authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+          tokenEndpoint: 'https://github.com/login/oauth/access_token',
+          revocationEndpoint:
+            `https://github.com/settings/connections/applications/${CLIENT_ID}`,
+        },
+      },
     },
     {
       name: 'Spotify',
       type: constants.spotify,
-      url: 'http://spotify',
+      config: {},
     },
   ],
   listData: [],
