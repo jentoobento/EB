@@ -47,10 +47,12 @@ const articleReducer = (state = initialState, action) => {
       };
     case ARTICLE_TYPES.GET_USER_DATA_FAILURE:
     case ARTICLE_TYPES.AUTHORIZE_FAILURE:
+    case ARTICLE_TYPES.ADD_NOTE_FAILURE:
       return {
         ...state,
         errorMessage: action.payload,
       };
+    case ARTICLE_TYPES.ADD_NOTE_SUCCESS:
     default:
       return state;
   }

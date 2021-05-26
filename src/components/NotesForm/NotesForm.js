@@ -7,8 +7,12 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
+import {
+  addNote,
+} from '../../redux/actions/articleActions';
 import Button from '../UI/Button';
 import Colors from '../../../native-base-theme/variables/commonColor';
 import styles from './styles';
@@ -22,6 +26,7 @@ const NotesForm = ({
   visible,
   onClose,
 }) => {
+  const dispatch = useDispatch();
   const [titleText, setTitleText] = useState('');
   const [bodyText, setBodyText] = useState('');
   const [error, setError] = useState('');
@@ -33,7 +38,13 @@ const NotesForm = ({
 
     if (!titleText.trim()) {
       setError('Your Note needs a title!');
+      return;
     }
+
+    dispatch(addNote({
+      title: titleText,
+      body: bodyText,
+    }));
   };
 
   const closeModal = () => {

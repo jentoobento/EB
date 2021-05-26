@@ -77,3 +77,44 @@ export const authorizeThirdParty = (config) => async (dispatch) => {
       dispatch(authorizeThirdPartyFailure('We could not sign you in. Please try again.'));
     });
 };
+
+/**
+ * For debugging purposes only
+ */
+const addNoteSuccess = () => ({
+  type: TYPES.ADD_NOTE_SUCCESS,
+});
+
+/**
+ * Sets the errorMessage in the store
+ * @param {String} errorMessage
+ */
+const addNoteFailure = (errorMessage) => ({
+  type: TYPES.ADD_NOTE_FAILURE,
+  payload: errorMessage,
+});
+
+/**
+ * Posts data to fake api
+ * @param {Object} noteData title and body of note
+ * @param {Function} callback function to run on success case (update ui)
+ */
+export const addNote = (noteData, callback = () => {}) => async (dispatch) => {
+  axios({
+    method: 'POST',
+    url: 'https://jsonplaceholder.typicode.com/posts',
+    data: { noteData },
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  })
+    .then(({ data }) => {
+      console.log('response from axios', data);
+      dispatch(addNoteSuccess());
+      callback();
+    })
+    .catch((error) => {
+      console.log('axios error', error);
+      dispatch(addNoteFailure('Couldn\'t add note. Please try again.'));
+    });
+};
