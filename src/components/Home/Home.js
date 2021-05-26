@@ -14,7 +14,9 @@ const Home = () => {
     <Container style={styles.container}>
       <Content padder>
         <ScrollView contentContainerStyle={styles.scrollContent} style={styles.scoll}>
-          {accounts.map((account) => <AccountBox account={account} />)}
+          {accounts.map((account) => (
+            <AccountBox key={account.name} account={account} />
+          ))}
         </ScrollView>
       </Content>
     </Container>

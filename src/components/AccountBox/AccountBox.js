@@ -30,7 +30,6 @@ const AccountBox = ({ account }) => {
 
   return (
     <TouchableOpacity
-      key={account.name}
       style={styles.container}
       onPress={onPress}
     >
