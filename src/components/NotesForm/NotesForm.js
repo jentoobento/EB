@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  Keyboard,
   Modal,
   Text,
-  TouchableOpacity,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
+import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
+import Button from '../UI/Button';
+import Colors from '../../../native-base-theme/variables/commonColor';
 import styles from './styles';
 
 /**
@@ -16,14 +22,66 @@ const NotesForm = ({
   visible,
   onClose,
 }) => {
+  const [titleText, setTitleText] = useState('');
+  const [bodyText, setBodyText] = useState('');
+  const [error, setError] = useState('');
+
+  const onPress = () => {
+    console.log(titleText, bodyText);
+    Keyboard.dismiss();
+    setError('');
+
+    if (!titleText.trim()) {
+      setError('Your Note needs a title!');
+    }
+  };
 
   return (
-    <Modal onClose={onClose} visible={visible}>
-      <Text>hi</Text>
-      <TouchableOpacity onPress={onClose}>
-        <Text>Close me</Text>
-      </TouchableOpacity>
-    </Modal>
+    <View style={styles.container}>
+      <Modal
+        onClose={onClose}
+        visible={visible}
+        transparent
+      >
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View style={styles.modal}>
+            <Icon
+              name="close-o"
+              type="evilicon"
+              color={Colors.brandPrimary}
+              underlayColor={Colors.contentStyle}
+              size={40}
+              containerStyle={styles.icon}
+              onPress={onClose}
+            />
+            <TextInput
+              placeholder="Title"
+              autoCapitalize="words"
+              maxLength={100}
+              onChangeText={(text) => setTitleText(text)}
+              underlineColorAndroid="transparent"
+              style={[styles.textInput, { textAlignVertical: 'center' }]}
+            />
+            <TextInput
+              multiline
+              maxLength={500}
+              placeholder="Add text to your note!"
+              underlineColorAndroid="transparent"
+              onChangeText={(text) => setBodyText(text)}
+              style={[styles.textInput, { height: 100 }]}
+            />
+            <Text style={styles.error}>
+              {error}
+            </Text>
+            <Button
+              text="Add Note"
+              style={styles.button}
+              onPress={onPress}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+    </View>
   );
 };
 
