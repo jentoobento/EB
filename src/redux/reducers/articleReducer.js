@@ -12,6 +12,8 @@ const initialState = {
     {
       name: 'GitHub',
       type: constants.github,
+      fontAwesomeIcon: 'github',
+      disabled: false,
       config: {
         redirectUrl: 'com.reactnativestarterkit://oauthredirect',
         clientId: GITHUB_CLIENT_ID,
@@ -29,6 +31,8 @@ const initialState = {
     {
       name: 'Spotify',
       type: constants.spotify,
+      fontAwesomeIcon: 'spotify',
+      disabled: true,
       config: {
         // TODO
         clientId: SPOTIFY_CLIENT_ID,

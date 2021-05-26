@@ -3,12 +3,15 @@ import {
   Alert,
   Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import {
   authorizeThirdParty,
 } from '../../redux/actions/articleActions';
+import Colors from '../../../native-base-theme/variables/commonColor';
 import styles from './styles';
 
 /**
@@ -41,10 +44,27 @@ const AccountBox = ({ account, navigation }) => {
 
   return (
     <TouchableOpacity
+      disabled={account.disabled}
       style={styles.container}
       onPress={onPress}
     >
-      <Text>{account.name}</Text>
+      {account.disabled && (
+        <View style={styles.disabledBanner}>
+          <Text style={styles.disabledText}>
+            Coming Soon!
+          </Text>
+        </View>
+      )}
+      <Icon
+        name={account.fontAwesomeIcon}
+        type="font-awesome"
+        size={55}
+        color={Colors.brandPrimary}
+        iconStyle={styles.icon}
+      />
+      <Text style={styles.text}>
+        {account.name}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -52,6 +72,8 @@ const AccountBox = ({ account, navigation }) => {
 AccountBox.propTypes = {
   account: PropTypes.shape({
     name: PropTypes.string,
+    fontAwesomeIcon: PropTypes.string,
+    disabled: PropTypes.bool,
     config: PropTypes.shape({}),
   }),
   navigation: PropTypes.shape({
@@ -62,6 +84,8 @@ AccountBox.propTypes = {
 AccountBox.defaultProps = {
   account: {
     name: '',
+    fontAwesomeIcon: 'question-circle',
+    disabled: false,
     config: {},
   },
   navigation: {
