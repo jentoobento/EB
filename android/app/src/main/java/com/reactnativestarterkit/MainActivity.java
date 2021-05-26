@@ -8,7 +8,7 @@ public class MainActivity extends ReactActivity {
   // Show RN Splash Screen on launch
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    SplashScreen.show(this);
+    // SplashScreen.show(this);
     super.onCreate(savedInstanceState);
   }
 
