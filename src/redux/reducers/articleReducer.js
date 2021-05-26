@@ -1,4 +1,9 @@
-import { CLIENT_ID, CLIENT_SECRET } from '@env';
+import {
+  GITHUB_CLIENT_ID,
+  GITHUB_CLIENT_SECRET,
+  SPOTIFY_CLIENT_ID,
+  SPOTIFY_CLIENT_SECRET,
+} from '@env';
 import ARTICLE_TYPES from '../types/articleTypes';
 import constants from '../../constants/config';
 
@@ -7,25 +12,34 @@ const initialState = {
     {
       name: 'GitHub',
       type: constants.github,
-      baseUrl: 'https://github.com',
       config: {
         redirectUrl: 'com.reactnativestarterkit://oauthredirect',
-        clientId: CLIENT_ID,
-        clientSecret: CLIENT_SECRET,
+        clientId: GITHUB_CLIENT_ID,
+        clientSecret: GITHUB_CLIENT_SECRET,
         scopes: ['user', 'repo'],
         additionalHeaders: { Accept: 'application/json' },
         serviceConfiguration: {
           authorizationEndpoint: 'https://github.com/login/oauth/authorize',
           tokenEndpoint: 'https://github.com/login/oauth/access_token',
           revocationEndpoint:
-            `https://github.com/settings/connections/applications/${CLIENT_ID}`,
+            `https://github.com/settings/connections/applications/${GITHUB_CLIENT_ID}`,
         },
       },
     },
     {
       name: 'Spotify',
       type: constants.spotify,
-      config: {},
+      config: {
+        // TODO
+        clientId: SPOTIFY_CLIENT_ID,
+        clientSecret: SPOTIFY_CLIENT_SECRET,
+        redirectUrl: 'com.reactnativestarterkit://oauthredirect',
+        scopes: [],
+        serviceConfiguration: {
+          authorizationEndpoint: '',
+          tokenEndpoint: '',
+        },
+      },
     },
   ],
   listData: [],
