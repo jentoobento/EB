@@ -8,6 +8,10 @@ import ListItem from '../ListItem/ListItem';
 import NotesForm from '../NotesForm/NotesForm';
 import styles from './styles';
 
+/**
+ * Renders a scrollable flatlist of ListItems
+ * When a ListItem is pressed, the modal NotesForm will appear
+ */
 const ListView = () => {
   const listData = useSelector((state) => state.articles.listData);
   const [formVisible, setFormVisible] = useState(false);

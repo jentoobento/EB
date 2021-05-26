@@ -6,11 +6,19 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { CLIENT_ID, CLIENT_SECRET } from '@env';
+import PropTypes from 'prop-types';
 import {
   authorizeThirdParty,
 } from '../../redux/actions/articleActions';
 import styles from './styles';
 
+/**
+ * Renders a button of an account, ie. "github", "spotify", etc.
+ * When pressed, will attempt to sign in to that account
+ * If sign in was successful, navigates to the listView screen
+ * @param {Object} account the account from redux
+ * @param {Object} navigation the navigation object from NavigationContainer
+ */
 const AccountBox = ({ account, navigation }) => {
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.articles.userToken);
@@ -54,6 +62,24 @@ const AccountBox = ({ account, navigation }) => {
       <Text>{account.name}</Text>
     </TouchableOpacity>
   );
+};
+
+AccountBox.propTypes = {
+  account: PropTypes.shape({
+    name: PropTypes.string,
+  }),
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
+};
+
+AccountBox.defaultProps = {
+  account: {
+    name: '',
+  },
+  navigation: {
+    navigate: () => {},
+  },
 };
 
 export default AccountBox;
