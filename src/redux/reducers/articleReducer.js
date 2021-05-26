@@ -1,13 +1,16 @@
 import ARTICLE_TYPES from '../types/articleTypes';
+import constants from '../../constants/config';
 
 const initialState = {
   accounts: [
     {
       name: 'GitHub',
+      type: constants.github,
       url: 'http://github',
     },
     {
       name: 'Spotify',
+      type: constants.spotify,
       url: 'http://spotify',
     },
   ],
