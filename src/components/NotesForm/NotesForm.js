@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 import {
   Keyboard,
-  Modal,
   Text,
   TextInput,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import {
   addNote,
 } from '../../redux/actions/articleActions';
 import Button from '../UI/Button';
-import Colors from '../../../native-base-theme/variables/commonColor';
+import Modal from '../UI/Modal';
 import styles from './styles';
 
 /**
@@ -29,6 +26,7 @@ const NotesForm = ({
   const dispatch = useDispatch();
   const [titleText, setTitleText] = useState('');
   const [bodyText, setBodyText] = useState('');
+  const [callbackModalVisible, setCallbackModalVisible] = useState(false);
   const [error, setError] = useState('');
 
   const onPress = () => {
@@ -41,10 +39,13 @@ const NotesForm = ({
       return;
     }
 
-    dispatch(addNote({
-      title: titleText,
-      body: bodyText,
-    }));
+    dispatch(addNote(
+      {
+        title: titleText,
+        body: bodyText,
+      },
+      () => setCallbackModalVisible(true),
+    ));
   };
 
   const closeModal = () => {
@@ -55,21 +56,22 @@ const NotesForm = ({
   return (
     <View style={styles.container}>
       <Modal
-        onClose={closeModal}
+        visible={callbackModalVisible}
+        onClose={() => {
+          setCallbackModalVisible(false);
+          closeModal();
+        }}
+        content={() => (
+          <Text style={styles.largeText}>
+            Success! Note Added!
+          </Text>
+        )}
+      />
+      <Modal
         visible={visible}
-        transparent
-      >
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-          <View style={styles.modal}>
-            <Icon
-              name="close-o"
-              type="evilicon"
-              color={Colors.brandPrimary}
-              underlayColor={Colors.contentStyle}
-              size={40}
-              containerStyle={styles.icon}
-              onPress={closeModal}
-            />
+        onClose={closeModal}
+        content={() => (
+          <>
             <TextInput
               placeholder="Title"
               autoCapitalize="words"
@@ -94,9 +96,9 @@ const NotesForm = ({
               style={styles.button}
               onPress={onPress}
             />
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+          </>
+        )}
+      />
     </View>
   );
 };
