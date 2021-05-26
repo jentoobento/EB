@@ -13,6 +13,7 @@ const initialState = {
   ],
   listData: [],
   userToken: '',
+  errorMessage: '',
 };
 
 const articleReducer = (state = initialState, action) => {
@@ -21,6 +22,17 @@ const articleReducer = (state = initialState, action) => {
       return {
         ...state,
         listData: action.payload,
+      };
+    case ARTICLE_TYPES.AUTHORIZE_SUCCESS:
+      return {
+        ...state,
+        userToken: action.payload,
+      };
+    case ARTICLE_TYPES.GET_USER_DATA_FAILURE:
+    case ARTICLE_TYPES.AUTHORIZE_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
       };
     default:
       return state;
