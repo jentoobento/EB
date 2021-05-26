@@ -6,7 +6,7 @@ import TYPES from '../types/articleTypes';
  * Sets the array of user items as listData in the store
  * @param {Array} listData Array of user items to be displayed in ui
  */
-export const getUserDataSuccess = (listData) => ({
+const getUserDataSuccess = (listData) => ({
   type: TYPES.GET_USER_DATA_SUCCESS,
   payload: listData,
 });
@@ -15,7 +15,7 @@ export const getUserDataSuccess = (listData) => ({
  * Sets the errorMessage in the store
  * @param {String} errorMessage
  */
-export const getUserDataFailure = (errorMessage) => ({
+const getUserDataFailure = (errorMessage) => ({
   type: TYPES.GET_USER_DATA_FAILURE,
   payload: errorMessage,
 });
@@ -46,7 +46,7 @@ export const getUserData = (token) => async (dispatch) => {
  * Sets the accessToken in the store
  * @param {String} accessToken the access token received when user signs in
  */
-export const authorizeThirdPartySuccess = (accessToken) => ({
+const authorizeThirdPartySuccess = (accessToken) => ({
   type: TYPES.AUTHORIZE_SUCCESS,
   payload: accessToken,
 });
@@ -55,7 +55,7 @@ export const authorizeThirdPartySuccess = (accessToken) => ({
  * Sets the errorMessage in the store
  * @param {String} errorMessage
  */
-export const authorizeThirdPartyFailure = (errorMessage) => ({
+const authorizeThirdPartyFailure = (errorMessage) => ({
   type: TYPES.AUTHORIZE_FAILURE,
   payload: errorMessage,
 });
