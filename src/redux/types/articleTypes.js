@@ -1,0 +1,3 @@
+export default {
+  GET_USER_DATA_SUCCESS: 'GET_USER_DATA_SUCCESS',
+};
