@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
+  Alert,
   Text,
   TouchableOpacity,
 } from 'react-native';
-import { authorize } from 'react-native-app-auth';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import { CLIENT_ID, CLIENT_SECRET } from '@env';
+import {
+  authorizeThirdParty,
+} from '../../redux/actions/articleActions';
 import styles from './styles';
 
-const AccountBox = ({ account }) => {
+const AccountBox = ({ account, navigation }) => {
+  const dispatch = useDispatch();
+  const userToken = useSelector((state) => state.articles.userToken);
+  const errorMessage = useSelector((state) => state.articles.errorMessage);
+
   const config = {
     redirectUrl: 'com.reactnativestarterkit://oauthredirect',
     clientId: CLIENT_ID,
@@ -23,29 +30,21 @@ const AccountBox = ({ account }) => {
     },
   };
 
-  const getUserData = (token) => {
-    axios({
-      method: 'GET',
-      url: 'https://api.github.com/user/repos',
-      headers: {
-        Authorization: `token ${token}`,
-      },
-    })
-      .then((response) => {
-        console.log('response from axios', response);
-      });
-  };
-
   const onPress = () => {
-    console.log('go to ', account.url);
-
-    authorize(config)
-      .then((response) => {
-        console.log('response from authorize', response);
-
-        getUserData(response.accessToken);
-      });
+    dispatch(authorizeThirdParty(config));
   };
+
+  useEffect(() => {
+    if (userToken) {
+      navigation.navigate('listView');
+    }
+  }, [userToken]);
+
+  useEffect(() => {
+    if (errorMessage) {
+      Alert.alert(errorMessage);
+    }
+  }, [errorMessage]);
 
   return (
     <TouchableOpacity
