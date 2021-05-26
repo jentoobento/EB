@@ -6,15 +6,16 @@ import DefaultProps from '../constants/navigation';
 import { ArticlesForm, ArticlesList, ArticlesSingle } from '../containers';
 
 import Home from '../components/Home/Home';
+import ListView from '../components/ListView/ListView';
 
 const Index = (
   <Stack hideNavBar>
     <Scene hideNavBar>
-      <Stack
-        key="home"
-        title="Sign in to your account"
-      >
+      <Stack key="home" title="Sign in to your account">
         <Scene key="home" component={Home} />
+      </Stack>
+      <Stack key="listView" title="Your items">
+        <Scene key="listView" component={ListView} />
       </Stack>
 
       <Stack
