@@ -36,10 +36,15 @@ const NotesForm = ({
     }
   };
 
+  const closeModal = () => {
+    setError('');
+    onClose();
+  };
+
   return (
     <View style={styles.container}>
       <Modal
-        onClose={onClose}
+        onClose={closeModal}
         visible={visible}
         transparent
       >
@@ -52,7 +57,7 @@ const NotesForm = ({
               underlayColor={Colors.contentStyle}
               size={40}
               containerStyle={styles.icon}
-              onPress={onClose}
+              onPress={closeModal}
             />
             <TextInput
               placeholder="Title"
