@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { authorize } from 'react-native-app-auth';
+import axios from 'axios';
 import { CLIENT_ID, CLIENT_SECRET } from '@env';
 import styles from './styles';
 
@@ -12,7 +13,7 @@ const AccountBox = ({ account }) => {
     redirectUrl: 'com.reactnativestarterkit://oauthredirect',
     clientId: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
-    scopes: ['identity'],
+    scopes: ['user', 'repo'],
     additionalHeaders: { Accept: 'application/json' },
     serviceConfiguration: {
       authorizationEndpoint: 'https://github.com/login/oauth/authorize',
@@ -22,10 +23,28 @@ const AccountBox = ({ account }) => {
     },
   };
 
+  const getUserData = (token) => {
+    axios({
+      method: 'GET',
+      url: 'https://api.github.com/user/repos',
+      headers: {
+        Authorization: `token ${token}`,
+      },
+    })
+      .then((response) => {
+        console.log('response from axios', response);
+      });
+  };
+
   const onPress = () => {
     console.log('go to ', account.url);
 
-    authorize(config).then((response) => console.log(response));
+    authorize(config)
+      .then((response) => {
+        console.log('response from authorize', response);
+
+        getUserData(response.accessToken);
+      });
   };
 
   return (
