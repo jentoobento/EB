@@ -1,10 +1,12 @@
 import React from 'react';
 import {
+  Image,
   Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
+import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
-import Colors from '../../../native-base-theme/variables/commonColor';
 import constants from '../../constants/config';
 import styles from './styles';
 
@@ -40,14 +42,20 @@ const ListItem = ({
       return (
         <TouchableOpacity
           onPress={onPress}
-          style={[
-            styles.container,
-            {
-              backgroundColor: item.private ? Colors.brandDanger : Colors.brandSuccess,
-            },
-          ]}
+          style={styles.container}
         >
-          <Text>{item.name}</Text>
+          <Image source={{ uri: item.owner.avatar_url }} style={styles.image} />
+          <Text style={styles.text} numberOfLines={1}>
+            {item.name}
+          </Text>
+          {item.private ? (
+            <Icon
+              name="lock"
+              type="font-awesome"
+              size={20}
+              iconStyle={styles.lockIcon}
+            />
+          ) : <View style={styles.emptySpace} />}
         </TouchableOpacity>
       );
 
@@ -62,8 +70,13 @@ const ListItem = ({
     */
     case constants.spotify:
       return (
-        <TouchableOpacity onPress={onPress}>
-          <Text>{item.track.name}</Text>
+        <TouchableOpacity
+          onPress={onPress}
+          style={styles.container}
+        >
+          <Text style={styles.text} numberOfLines={1}>
+            {item.track.name}
+          </Text>
         </TouchableOpacity>
       );
     default:
@@ -75,6 +88,9 @@ ListItem.propTypes = {
   item: PropTypes.shape({
     name: PropTypes.string,
     private: PropTypes.bool,
+    owner: PropTypes.shape({
+      avatar_url: PropTypes.string,
+    }),
     track: PropTypes.shape({
       name: PropTypes.string,
     }),
@@ -87,6 +103,9 @@ ListItem.defaultProps = {
   item: {
     name: '',
     private: false,
+    owner: {
+      avatar_url: '',
+    },
     track: {
       name: '',
     },

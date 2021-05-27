@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   FlatList,
-  Text,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import ListItem from '../ListItem/ListItem';
@@ -24,6 +23,7 @@ const ListView = () => {
       />
       <FlatList
         data={listData}
+        style={styles.container}
         renderItem={({ item }) => (
           <ListItem
             key={item.id}
