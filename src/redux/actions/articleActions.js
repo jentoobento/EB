@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { authorize } from 'react-native-app-auth';
+import { authorize, revoke } from 'react-native-app-auth';
 import TYPES from '../types/articleTypes';
 
 /**
@@ -75,6 +75,38 @@ export const authorizeThirdParty = (config) => async (dispatch) => {
     .catch((error) => {
       console.log('authorize error', error);
       dispatch(authorizeThirdPartyFailure('We could not sign you in. Please try again.'));
+    });
+};
+
+/**
+ * Revokes the accessToken
+ * @param {Object} config the configuration settings based on source
+ */
+export const revokeThirdParty = (
+  config,
+  otherParams,
+  successCallback,
+  failureCallback,
+) => async () => {
+  revoke(
+    config,
+    {
+      ...otherParams,
+      includeBasicAuth: true,
+      sendClientId: true,
+    },
+  )
+    .then((response) => {
+      console.log('response from revoke', response);
+      if (response.ok) {
+        successCallback();
+      } else {
+        failureCallback(response.status);
+      }
+    })
+    .catch((error) => {
+      console.log('revoke error', error);
+      failureCallback(error.status);
     });
 };
 
