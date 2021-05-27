@@ -1,3 +1,38 @@
+## Home Page
+
+<div>
+  <img src="https://github.com/jentoobento/EchoBind/blob/master/home.jpg" width="200" height="400" style="float: left;"/>
+</div>
+
+## Authentication Flow (Github)
+Redirect to third party site to login.
+
+<div>
+  <img src="https://github.com/jentoobento/EchoBind/blob/master/auth1.jpg" width="200" height="400" style="float: left;"/>
+  <img src="https://github.com/jentoobento/EchoBind/blob/master/auth2.jpg" width="200" height="400" style="float: right;"/>
+</div>
+
+## List View of User Data, Responsive View
+Scrollable list of user's data after the login. Design works with landscape view also.
+
+<div>
+  <img src="https://github.com/jentoobento/EchoBind/blob/master/listview.jpg" width="200" height="400" style="float: left;"/>
+  <img src="https://github.com/jentoobento/EchoBind/blob/master/listview2.jpg" width="400" height="200" style="float: right;"/>
+</div>
+
+## Feature: Add a Note
+Simple form pop up when a list view item is pressed.
+
+<div>
+  <img src="https://github.com/jentoobento/EchoBind/blob/master/note1.jpg" width="200" height="400" style="float: left;"/>
+  <img src="https://github.com/jentoobento/EchoBind/blob/master/note2.jpg" width="200" height="400" style="float: right;"/>
+</div>
+<div>
+  <img src="https://github.com/jentoobento/EchoBind/blob/master/note3.jpg" width="200" height="400" style="float: left;"/>
+</div>
+
+---
+
 Example of Github login and some axios calls.
 
 Needs Client Id and Client Secret to be able to login with Github.
