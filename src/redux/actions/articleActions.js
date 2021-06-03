@@ -23,8 +23,9 @@ const getUserDataFailure = (errorMessage) => ({
 /**
  * Fetches data from axios using the user's access token
  * @param {String} token the accessToken received when user signs in
+ * @param {Function} successCallback the function to run if api call was successful
  */
-export const getUserData = (token) => async (dispatch) => {
+export const getUserData = (token, successCallback = () => {}) => async (dispatch) => {
   axios({
     method: 'GET',
     url: 'https://api.github.com/user/repos',
@@ -35,6 +36,7 @@ export const getUserData = (token) => async (dispatch) => {
     .then(({ data }) => {
       console.log('response from axios', data);
       dispatch(getUserDataSuccess(data));
+      successCallback();
     })
     .catch((error) => {
       console.log('axios error', error);
@@ -64,13 +66,14 @@ const authorizeThirdPartyFailure = (errorMessage) => ({
  * Attempts to sign in to the user's account
  * Returns an accessToken on success
  * @param {Object} config the configuration settings to call authorize on based on source
+ * @param {Function} successCallback the function to run if getUserData is successful
  */
-export const authorizeThirdParty = (config) => async (dispatch) => {
+export const authorizeThirdParty = (config, successCallback = () => {}) => async (dispatch) => {
   authorize(config)
     .then(({ accessToken }) => {
       console.log('response from authorize', accessToken);
       dispatch(authorizeThirdPartySuccess(accessToken));
-      dispatch(getUserData(accessToken));
+      dispatch(getUserData(accessToken, successCallback));
     })
     .catch((error) => {
       console.log('authorize error', error);

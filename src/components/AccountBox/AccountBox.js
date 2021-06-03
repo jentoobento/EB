@@ -23,18 +23,18 @@ import styles from './styles';
  */
 const AccountBox = ({ account, navigation }) => {
   const dispatch = useDispatch();
-  const userToken = useSelector((state) => state.articles.userToken);
   const errorMessage = useSelector((state) => state.articles.errorMessage);
 
+  /**
+   * Handles when component is pressed.
+   * Navigates to third party for auth, on success, navigates to ListView.
+   */
   const onPress = () => {
-    dispatch(authorizeThirdParty(account.config));
+    dispatch(authorizeThirdParty(
+      account.config,
+      () => navigation.navigate('listView'),
+    ));
   };
-
-  useEffect(() => {
-    if (userToken) {
-      navigation.navigate('listView');
-    }
-  }, [userToken]);
 
   useEffect(() => {
     if (errorMessage) {
