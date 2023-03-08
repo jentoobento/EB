@@ -1,3 +1,13 @@
+Tech Assessment.
+
+Requirements:
+- Sign in using user's GitHub or Spotify Account.
+- If GitHub, list the user's repositories. If Spotify, list the user's playlists/songs.
+- No design given, UI/UX determined by developer.
+- When a list item is pressed, user should be able to add a note.
+
+---
+
 ## Home Page
 
 <div>
